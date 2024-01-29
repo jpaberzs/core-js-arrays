@@ -386,8 +386,9 @@ function generateOdds(len) {
  *   getElementByIndices(['one','two','three'], [2]) => 'three'  (arr[2])
  *   getElementByIndices([[[ 1, 2, 3]]], [ 0, 0, 1 ]) => 2        (arr[0][0][1])
  */
-function getElementByIndices(/* arr, indices */) {
-  throw new Error('Not implemented');
+function getElementByIndices(arr, indices) {
+  if (indices.length === 0) return arr;
+  return getElementByIndices(arr[indices[0]], indices.slice(1));
 }
 
 /**
@@ -563,8 +564,10 @@ function propagateItemsByPositionIndex(arr) {
  *    shiftArray(['a', 'b', 'c', 'd'], -1) => ['b', 'c', 'd', 'a']
  *    shiftArray([10, 20, 30, 40, 50], -3) => [40, 50, 10, 20, 30]
  */
-function shiftArray(/* arr, n */) {
-  throw new Error('Not implemented');
+function shiftArray(arr, n) {
+  if (n === 0) return arr;
+  if (n > 0) return [...arr.slice(arr.length - n), ...arr.slice(0, n + 1)];
+  return [...arr.slice(-n), ...arr.slice(0, -n)];
 }
 
 /**
@@ -580,8 +583,22 @@ function shiftArray(/* arr, n */) {
  *   sortDigitNamesByNumericOrder([ 'nine','eight','nine','eight' ]) => [ 'eight','eight','nine','nine']
  *   sortDigitNamesByNumericOrder([ 'one','one','one','zero' ]) => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  if (arr.length === 0) return [];
+  if (arr.length === 1) return arr;
+  const arrNums = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
+  return arr.sort((a, b) => arrNums.indexOf(a) - arrNums.indexOf(b));
 }
 
 /**
@@ -603,8 +620,21 @@ function sortDigitNamesByNumericOrder(/* arr */) {
  *   swapHeadAndTail([]) => []
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  if (arr.length === 0) return [];
+  if (arr.length === 1) return arr;
+  const middleIndex = Math.floor(arr.length / 2);
+  if (arr.length % 2 === 1) {
+    return [
+      ...arr.slice(middleIndex + (arr.length % 2)),
+      arr[middleIndex],
+      ...arr.slice(0, middleIndex),
+    ];
+  }
+  return [
+    ...arr.slice(middleIndex + (arr.length % 2)),
+    ...arr.slice(0, middleIndex),
+  ];
 }
 
 module.exports = {
